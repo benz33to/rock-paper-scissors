@@ -12,14 +12,44 @@
 
 </body>
 <script>
-    
+
     function getComputerChoice() {
         const computerChoices = ['rock', 'paper', 'scissors'];
         const choice = Math.round(Math.random() * 2);
         return computerChoices[choice];
     }
 
-    getComputerChoice();
+    function playRound(playerSelection, computerSelection) {
+
+        const roundLostText = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        const roundWonText = `You Win! ${playerSelection} beats ${computerSelection}`;
+        const roundDrawText = `It seems we have a draw, both parties selected ${playerSelection}`;
+        const wrongSelectionText = `Wrong selection, your selection should be among the following options: Rock, Paper or Scissors`;
+        
+        if (playerSelection === 'rock') {
+
+            return computerSelection === 'paper' ? roundLostText
+                : computerSelection === 'scissors' ? roundWonText
+                : roundDrawText;
+        } else if (playerSelection === 'paper') {
+
+            return computerSelection === 'scissors' ? roundLostText
+                : computerSelection === 'rock' ? roundWonText
+                : roundDrawText;
+        } else if (playerSelection === 'scissors') {
+
+            return computerSelection === 'rock' ? roundLostText
+                : computerSelection === 'paper' ? roundWonText
+                : roundDrawText;
+        } else {
+            return wrongSelectionText;
+        }
+    }
+
+    const playerSelection =  (prompt("Please make your selection", "")).toLowerCase();
+    const computerSelection = getComputerChoice();
+
+    console.log(playRound(playerSelection, computerSelection));
 
 </script>
 
