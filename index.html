@@ -25,29 +25,34 @@
         const roundWonText = `You Win! ${playerSelection} beats ${computerSelection}`;
         const roundDrawText = `It seems we have a draw, both parties selected ${playerSelection}`;
         const wrongSelectionText = `Wrong selection, your selection should be among the following options: Rock, Paper or Scissors`;
-        
+
         if (playerSelection === 'rock') {
 
             return computerSelection === 'paper' ? roundLostText
                 : computerSelection === 'scissors' ? roundWonText
-                : roundDrawText;
+                    : roundDrawText;
         } else if (playerSelection === 'paper') {
 
             return computerSelection === 'scissors' ? roundLostText
                 : computerSelection === 'rock' ? roundWonText
-                : roundDrawText;
+                    : roundDrawText;
         } else if (playerSelection === 'scissors') {
 
             return computerSelection === 'rock' ? roundLostText
                 : computerSelection === 'paper' ? roundWonText
-                : roundDrawText;
+                    : roundDrawText;
         } else {
             return wrongSelectionText;
         }
     }
 
-    const playerSelection =  (prompt("Please make your selection", "")).toLowerCase();
+    function game() {
+
+    }
+
+    const playerSelection = (prompt("Please make your selection", "")).toLowerCase();
     const computerSelection = getComputerChoice();
+
 
     console.log(playRound(playerSelection, computerSelection));
 
