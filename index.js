@@ -1,7 +1,3 @@
-let playerScore = 0;
-let computerScore = 0;
-const computerChoices = ['rock', 'paper', 'scissors'];
-
 function getComputerChoice() {
     const choice = Math.round(Math.random() * 2);
     return computerChoices[choice];
@@ -35,47 +31,70 @@ function getRoundWinner(playerWinsAgainst, playerLosesAgainst, playerSelection, 
     }
 }
 
-function getGameWinner() {
-    const gameLostText = `You Lose! your score is: ${playerScore} | computer score is: ${computerScore}, keep trying`;
-    const gameWonText = `You Win! your score is: ${playerScore} | computer score is: ${computerScore}, gg's!`;
-    const gameTiedText = `We have a draw! player score: ${playerScore} | computer score: ${computerScore}, gg's!`;
-    if (playerScore > computerScore) {
-        return gameWonText;
-    } else if (playerScore < computerScore) {
-        return gameLostText;
-    } else {
-        return gameTiedText;
-    }
-}
-
 function increasePlayerScore() {
     playerScore++;
+    document.querySelector('#player-score').innerText = playerScore;
 }
 
 function increaseComputerScore() {
     computerScore++;
+    document.querySelector('#computer-score').innerText = computerScore;
 }
 
 function playRound(playerSelection, computerSelection) {
 
     const wrongSelectionText = `Wrong selection, your selection should be among the following options: Rock, Paper or Scissors`;
-    if (!computerChoices.includes(playerSelection)) {
-        return wrongSelectionText;
-    }
+    if (!computerChoices.includes(playerSelection)) return wrongSelectionText;
+
     const playerWinsAgainst = getPlayerSelectionStrength(playerSelection);
     const playerLosesAgainst = getPlayerSelectionWeakness(playerSelection);
-    return getRoundWinner(playerWinsAgainst, playerLosesAgainst, playerSelection, computerSelection);
-
+    let roundWinnerText = getRoundWinner(playerWinsAgainst, playerLosesAgainst, playerSelection, computerSelection);
+    return (playerScore < 5 && computerScore < 5) ? roundWinnerText : endGame();
 }
 
-function game() {
-
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = (prompt("Please make your selection", ""))?.toLowerCase();
-        const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection, computerSelection));
-    }
+function initGame() {
+    playerScore = 0;
+    computerScore = 0;
+    document.querySelector('#player-score').innerText = playerScore;
+    document.querySelector('#computer-score').innerText = playerScore;
+    resultText.innerText = 'Please, make your selection';
 }
 
-game();
-console.log(getGameWinner());
+function endGame() {
+    const gameWonText = `You Win! your score is: ${playerScore} | computer score is: ${computerScore}, gg's!`;
+    const gameLostText = `You Lose! your score is: ${playerScore} | computer score is: ${computerScore}, keep trying`;
+    toggleButtons();
+    return playerScore > computerScore ? gameWonText : gameLostText;
+}
+
+function resetGame() {
+    toggleButtons();
+    initGame();
+}
+
+function game({ target }) {
+    const playerSelection = target.getAttribute('data-choice');
+    const computerSelection = getComputerChoice();
+    resultText.innerText = playRound(playerSelection, computerSelection);
+}
+
+
+function toggleButtons() {
+    playerChoices.forEach(choice => choice.disabled = !choice.disabled);
+    resetButton.disabled = !resetButton.disabled;
+}
+
+let playerScore;
+let computerScore;
+
+const resultText = document.querySelector('.result-text');
+const computerChoices = ['rock', 'paper', 'scissors'];
+const playerChoices = document.querySelectorAll('.selection-button');
+const resetButton = document.querySelector('#reset');
+
+initGame();
+
+playerChoices.forEach(choice => choice.addEventListener('click', game));
+resetButton.addEventListener('click', resetGame);
+
+//console.log(getGameWinner());

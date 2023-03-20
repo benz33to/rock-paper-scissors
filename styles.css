@@ -1,0 +1,49 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-container {
+    text-align: center;
+}
+
+.game-screen,
+.buttons-wrapper {
+    margin: 16px 0px;
+}
+
+.game-screen-container {
+    flex: 0 0 400px;
+    display: flex;
+    justify-content: center;
+}
+
+.game-screen {
+    padding: 16px;
+    width: 70vw;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.score-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.result {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-text {
+    font-size: 42px;
+    margin: 0;
+}
+
+.buttons-wrapper {
+    display: flex;
+    justify-content: space-around;
+}
